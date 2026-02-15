@@ -1,0 +1,24 @@
+{
+  "name": "portfolio-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run tokens && next dev",
+    "build": "npm run tokens && next build",
+    "start": "next start",
+    "tokens": "node scripts/build-tokens.js",
+    "tokens:watch": "nodemon --watch tokens/tokens.json --exec npm run tokens"
+  },
+  "dependencies": {
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "nodemon": "^3.0.2",
+    "typescript": "^5"
+  }
+}
