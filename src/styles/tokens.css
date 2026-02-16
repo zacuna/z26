@@ -1,23 +1,34 @@
-/* Auto-generated from tokens/tokens.json - DO NOT EDIT MANUALLY */
+/* Auto-generated from tokens/tokens.json — DO NOT EDIT MANUALLY */
 
+/* ── Primitive tokens ─────────────────────────────────────── */
 :root {
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
-  --borderRadius-sm: 4px;
-  --borderRadius-md: 8px;
-  --borderRadius-lg: 12px;
+  --spacing-0: 0px;
+  --spacing-50: 2px;
+  --spacing-100: 4px;
+  --spacing-200: 8px;
+  --spacing-300: 12px;
+  --spacing-400: 16px;
+  --spacing-500: 20px;
+  --spacing-600: 24px;
+  --spacing-800: 32px;
+  --spacing-1000: 40px;
+  --spacing-1200: 48px;
+  --spacing-1600: 64px;
+  --spacing-2000: 80px;
+  --spacing-2400: 96px;
+  --borderRadius-0: 0px;
+  --borderRadius-100: 4px;
+  --borderRadius-200: 8px;
+  --borderRadius-300: 12px;
+  --borderRadius-400: 16px;
   --borderRadius-full: 9999px;
   --fontSize-xs: 12px;
   --fontSize-sm: 14px;
   --fontSize-base: 16px;
   --fontSize-lg: 18px;
-  --fontSize-xl: 20px;
-  --fontSize-2xl: 24px;
-  --fontSize-3xl: 30px;
+  --fontSize-xl: 24px;
+  --fontSize-2xl: 32px;
+  --fontSize-3xl: 40px;
   --fontWeight-normal: 400;
   --fontWeight-medium: 500;
   --fontWeight-semibold: 600;
@@ -25,8 +36,30 @@
   --lineHeight-tight: 1.2;
   --lineHeight-normal: 1.5;
   --lineHeight-relaxed: 1.75;
-  --color-black: #000000;
-  --color-white: #ffffff;
+  --fontFamily-heading: 'Halant', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --fontFamily-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --color-black-50: rgba(0, 0, 0, 0.05);
+  --color-black-100: rgba(0, 0, 0, 0.1);
+  --color-black-200: rgba(0, 0, 0, 0.2);
+  --color-black-300: rgba(0, 0, 0, 0.3);
+  --color-black-400: rgba(0, 0, 0, 0.4);
+  --color-black-500: rgba(0, 0, 0, 0.5);
+  --color-black-600: rgba(0, 0, 0, 0.6);
+  --color-black-700: rgba(0, 0, 0, 0.7);
+  --color-black-800: rgba(0, 0, 0, 0.8);
+  --color-black-900: rgba(0, 0, 0, 0.9);
+  --color-black-1000: rgba(0, 0, 0, 1);
+  --color-white-50: rgba(255, 255, 255, 0.05);
+  --color-white-100: rgba(255, 255, 255, 0.1);
+  --color-white-200: rgba(255, 255, 255, 0.2);
+  --color-white-300: rgba(255, 255, 255, 0.3);
+  --color-white-400: rgba(255, 255, 255, 0.4);
+  --color-white-500: rgba(255, 255, 255, 0.5);
+  --color-white-600: rgba(255, 255, 255, 0.6);
+  --color-white-700: rgba(255, 255, 255, 0.7);
+  --color-white-800: rgba(255, 255, 255, 0.8);
+  --color-white-900: rgba(255, 255, 255, 0.9);
+  --color-white-1000: rgba(255, 255, 255, 1);
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
   --color-gray-200: #e5e7eb;
@@ -41,30 +74,69 @@
   --color-blue-500: #3b82f6;
   --color-blue-600: #2563eb;
   --color-blue-700: #1d4ed8;
+  --shadow-none: none;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --zIndex-base: 0;
+  --zIndex-dropdown: 100;
+  --zIndex-sticky: 200;
+  --zIndex-sidebar: 300;
+  --zIndex-header: 400;
+  --zIndex-modal: 500;
+  --zIndex-tooltip: 600;
+  --transition-duration-fast: 150ms;
+  --transition-duration-normal: 200ms;
+  --transition-duration-slow: 300ms;
+  --transition-easing-default: ease;
+  --transition-easing-in: ease-in;
+  --transition-easing-out: ease-out;
+  --transition-easing-inOut: ease-in-out;
+  --size-sideNav-expanded: 240px;
+  --size-sideNav-collapsed: 64px;
+  --size-header-height: 56px;
 }
 
+/* ── Semantic tokens · light (default) ─────────────────────── */
 :root {
-  --color-background-primary: #ffffff;
-  --color-background-secondary: #f9fafb;
-  --color-background-tertiary: #f3f4f6;
-  --color-text-primary: #111827;
-  --color-text-secondary: #4b5563;
-  --color-text-tertiary: #9ca3af;
-  --color-border-default: #e5e7eb;
-  --color-border-hover: #d1d5db;
-  --color-accent-primary: #3b82f6;
-  --color-accent-hover: #2563eb;
+  --color-background-primary: var(--color-white-1000);
+  --color-background-secondary: var(--color-gray-50);
+  --color-background-tertiary: var(--color-gray-100);
+  --color-text-primary: var(--color-gray-900);
+  --color-text-secondary: var(--color-gray-600);
+  --color-text-tertiary: var(--color-gray-400);
+  --color-border-default: var(--color-gray-200);
+  --color-border-hover: var(--color-gray-300);
+  --color-accent-primary: var(--color-blue-500);
+  --color-accent-hover: var(--color-blue-600);
 }
 
+/* ── Semantic tokens · dark ────────────────────────────────── */
 [data-theme="dark"] {
-  --color-background-primary: #111827;
-  --color-background-secondary: #1f2937;
-  --color-background-tertiary: #374151;
-  --color-text-primary: #f9fafb;
-  --color-text-secondary: #d1d5db;
-  --color-text-tertiary: #6b7280;
-  --color-border-default: #374151;
-  --color-border-hover: #4b5563;
-  --color-accent-primary: #60a5fa;
-  --color-accent-hover: #3b82f6;
+  --color-background-primary: var(--color-gray-900);
+  --color-background-secondary: var(--color-gray-800);
+  --color-background-tertiary: var(--color-gray-700);
+  --color-text-primary: var(--color-gray-50);
+  --color-text-secondary: var(--color-gray-300);
+  --color-text-tertiary: var(--color-gray-500);
+  --color-border-default: var(--color-gray-700);
+  --color-border-hover: var(--color-gray-600);
+  --color-accent-primary: var(--color-blue-400);
+  --color-accent-hover: var(--color-blue-500);
+}
+
+/* ── Typography tokens ────────────────────────────────────── */
+:root {
+  --typography-heading-lg-fontSize: var(--fontSize-3xl);
+  --typography-heading-lg-lineHeight: var(--lineHeight-tight);
+  --typography-heading-md-fontSize: var(--fontSize-2xl);
+  --typography-heading-md-lineHeight: var(--lineHeight-tight);
+  --typography-heading-sm-fontSize: var(--fontSize-xl);
+  --typography-heading-sm-lineHeight: var(--lineHeight-tight);
+  --typography-body-lg-fontSize: var(--fontSize-lg);
+  --typography-body-lg-lineHeight: var(--lineHeight-relaxed);
+  --typography-body-md-fontSize: var(--fontSize-base);
+  --typography-body-md-lineHeight: var(--lineHeight-normal);
+  --typography-body-sm-fontSize: var(--fontSize-sm);
+  --typography-body-sm-lineHeight: var(--lineHeight-normal);
 }

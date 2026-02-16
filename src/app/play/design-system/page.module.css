@@ -1,0 +1,575 @@
+/* ── Layout ──────────────────────────────────────────────────────── */
+
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background-primary);
+}
+
+/* ── Toolbar ─────────────────────────────────────────────────────── */
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-200) var(--spacing-600);
+  background: var(--color-background-secondary);
+  border-bottom: 1px solid var(--color-border-default);
+  flex-wrap: wrap;
+  gap: var(--spacing-200);
+}
+
+.toolbarLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-400);
+}
+
+.toolbarRight {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-200);
+}
+
+.backLink {
+  font-size: var(--fontSize-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: var(--color-accent-primary);
+}
+
+.title {
+  font-family: var(--fontFamily-heading);
+  font-size: var(--fontSize-xl);
+  font-weight: var(--fontWeight-bold);
+  color: var(--color-text-primary);
+}
+
+/* ── Tabs ─────────────────────────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--color-border-default);
+  background: var(--color-background-secondary);
+  padding: 0 var(--spacing-600);
+}
+
+.tab {
+  all: unset;
+  cursor: pointer;
+  padding: var(--spacing-200) var(--spacing-400);
+  font-size: var(--fontSize-sm);
+  font-weight: var(--fontWeight-medium);
+  color: var(--color-text-secondary);
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab:hover {
+  color: var(--color-text-primary);
+}
+
+.tabActive {
+  color: var(--color-accent-primary);
+  border-bottom-color: var(--color-accent-primary);
+}
+
+/* ── Content ─────────────────────────────────────────────────────── */
+
+.content {
+  flex: 1;
+  padding: var(--spacing-600);
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1200);
+}
+
+/* ── Panels ──────────────────────────────────────────────────────── */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-400);
+}
+
+.panelTitle {
+  font-family: var(--fontFamily-heading);
+  font-size: var(--fontSize-xl);
+  font-weight: var(--fontWeight-semibold);
+  color: var(--color-text-primary);
+}
+
+.panelDesc {
+  font-size: var(--fontSize-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--lineHeight-relaxed);
+  max-width: 640px;
+}
+
+.panelDesc code {
+  background: var(--color-background-tertiary);
+  padding: 1px 5px;
+  border-radius: var(--borderRadius-100);
+  font-size: var(--fontSize-xs);
+}
+
+/* ── Color grid ──────────────────────────────────────────────────── */
+
+.colorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--spacing-200);
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--borderRadius-200);
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  background: var(--color-background-secondary);
+}
+
+.swatchPreview {
+  height: 64px;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--spacing-100);
+}
+
+.swatchLabel {
+  font-size: 10px;
+  font-weight: var(--fontWeight-medium);
+  font-family: monospace;
+  opacity: 0.85;
+}
+
+.colorPicker {
+  width: 100%;
+  height: 24px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+}
+
+.colorPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.colorPicker::-webkit-color-swatch {
+  border: none;
+}
+
+.hexInput {
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--color-border-default);
+  padding: var(--spacing-100);
+  font-family: monospace;
+  font-size: var(--fontSize-xs);
+  text-align: center;
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+}
+
+.hexInput:focus {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: -2px;
+}
+
+/* ── Scale rows (spacing, font sizes) ────────────────────────────── */
+
+.scaleList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+.scaleRow {
+  display: grid;
+  grid-template-columns: 160px 1fr 80px;
+  align-items: center;
+  gap: var(--spacing-400);
+  padding: var(--spacing-100) 0;
+}
+
+.scaleLabel {
+  font-size: var(--fontSize-xs);
+  color: var(--color-text-secondary);
+}
+
+.spacingBar {
+  height: 12px;
+  background: var(--color-accent-primary);
+  border-radius: var(--borderRadius-100);
+  transition: width 0.15s;
+}
+
+.fontSample {
+  color: var(--color-text-primary);
+  font-weight: var(--fontWeight-medium);
+}
+
+.scaleInput {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--borderRadius-100);
+  padding: var(--spacing-100);
+  font-family: monospace;
+  font-size: var(--fontSize-xs);
+  text-align: center;
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+}
+
+.scaleInput:focus {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: -2px;
+}
+
+/* ── Border radius ───────────────────────────────────────────────── */
+
+.radiusRow {
+  display: flex;
+  gap: var(--spacing-600);
+  flex-wrap: wrap;
+}
+
+.radiusItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-100);
+}
+
+.radiusBox {
+  width: 56px;
+  height: 56px;
+  background: var(--color-accent-primary);
+  transition: border-radius 0.2s;
+}
+
+.radiusLabel {
+  font-size: var(--fontSize-xs);
+  color: var(--color-text-primary);
+  font-weight: var(--fontWeight-medium);
+}
+
+.radiusValue {
+  font-size: var(--fontSize-xs);
+  color: var(--color-text-secondary);
+}
+
+/* ── Typography ramp ─────────────────────────────────────────────── */
+
+.typoRamp {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-600);
+}
+
+.typoCategory {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+}
+
+.typoCategoryLabel {
+  font-size: var(--fontSize-xs);
+  font-weight: var(--fontWeight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.typoSample {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-200);
+  color: var(--color-text-primary);
+}
+
+.typoSizeTag {
+  font-size: var(--fontSize-xs);
+  font-weight: var(--fontWeight-medium);
+  color: var(--color-accent-primary);
+  min-width: 28px;
+  font-family: monospace;
+}
+
+/* ── Component preview ───────────────────────────────────────────── */
+
+.componentSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-800);
+}
+
+.componentBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-400);
+}
+
+.componentBlock h4 {
+  font-size: var(--fontSize-sm);
+  font-weight: var(--fontWeight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.componentRow {
+  display: flex;
+  gap: var(--spacing-400);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.cardRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--spacing-400);
+}
+
+.cardRow h5 {
+  font-weight: var(--fontWeight-semibold);
+  color: var(--color-text-primary);
+}
+
+/* ── Google Fonts tester ─────────────────────────────────────────── */
+
+.fontTester {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-600);
+}
+
+.fontInputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+.fieldLabel {
+  font-size: var(--fontSize-xs);
+  font-weight: var(--fontWeight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.fontUrlRow {
+  display: flex;
+  gap: var(--spacing-200);
+}
+
+.fontUrlInput {
+  flex: 1;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--borderRadius-200);
+  padding: var(--spacing-200) var(--spacing-400);
+  font-size: var(--fontSize-sm);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+}
+
+.fontUrlInput:focus {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: -2px;
+}
+
+.fontUrlInput::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.fontControls {
+  display: flex;
+  gap: var(--spacing-600);
+  flex-wrap: wrap;
+}
+
+.fontSelectGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+  min-width: 200px;
+}
+
+.fontSelect {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--borderRadius-200);
+  padding: var(--spacing-200) var(--spacing-400);
+  font-size: var(--fontSize-sm);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.fontSelect:focus {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: -2px;
+}
+
+.fontPreview {
+  padding: var(--spacing-600);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--borderRadius-300);
+  background: var(--color-background-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+  color: var(--color-text-primary);
+}
+
+/* ── Theme Mappings editor ───────────────────────────────────────── */
+
+.mappingsEditor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-600);
+}
+
+.mappingThemeTabs {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--borderRadius-200);
+  overflow: hidden;
+  width: fit-content;
+}
+
+.mappingThemeTab {
+  all: unset;
+  cursor: pointer;
+  padding: var(--spacing-200) var(--spacing-600);
+  font-size: var(--fontSize-sm);
+  font-weight: var(--fontWeight-medium);
+  color: var(--color-text-secondary);
+  background: var(--color-background-primary);
+  border-right: 1px solid var(--color-border-default);
+  transition: background 0.15s, color 0.15s;
+}
+
+.mappingThemeTab:last-child {
+  border-right: none;
+}
+
+.mappingThemeTab:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+}
+
+.mappingThemeTabActive {
+  background: var(--color-accent-primary);
+  color: #ffffff;
+}
+
+.mappingThemeTabActive:hover {
+  background: var(--color-accent-primary);
+  color: #ffffff;
+}
+
+.mappingCategories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-800);
+}
+
+.mappingCategory {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+}
+
+.mappingCategoryLabel {
+  font-size: var(--fontSize-xs);
+  font-weight: var(--fontWeight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mappingList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+.mappingRow {
+  display: grid;
+  grid-template-columns: 260px 24px 1fr;
+  align-items: center;
+  gap: var(--spacing-200);
+  padding: var(--spacing-200) var(--spacing-400);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--borderRadius-200);
+  background: var(--color-background-secondary);
+  transition: border-color 0.15s;
+}
+
+.mappingRow:hover {
+  border-color: var(--color-border-hover);
+}
+
+.mappingTokenInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-200);
+  min-width: 0;
+}
+
+.mappingTokenName {
+  font-size: var(--fontSize-xs);
+  color: var(--color-text-primary);
+  font-weight: var(--fontWeight-medium);
+  white-space: nowrap;
+}
+
+.mappingPreviewDot {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--borderRadius-full);
+  border: 1px solid var(--color-border-default);
+  flex-shrink: 0;
+}
+
+.mappingHex {
+  font-family: monospace;
+  font-size: var(--fontSize-xs);
+  color: var(--color-text-tertiary);
+}
+
+.mappingArrow {
+  font-size: var(--fontSize-sm);
+  color: var(--color-text-tertiary);
+  text-align: center;
+}
+
+.mappingSelect {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--borderRadius-100);
+  padding: var(--spacing-100) var(--spacing-200);
+  font-family: monospace;
+  font-size: var(--fontSize-xs);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  min-width: 0;
+}
+
+.mappingSelect:focus {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: -2px;
+}

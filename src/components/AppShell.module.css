@@ -1,0 +1,17 @@
+.shell {
+  min-height: 100vh;
+}
+
+.content {
+  padding: var(--spacing-600);
+  padding-top: var(--spacing-400);
+  transition: margin-left var(--transition-duration-slow) var(--transition-easing-inOut);
+}
+
+.contentExpanded {
+  margin-left: var(--size-sideNav-expanded);
+}
+
+.contentCollapsed {
+  margin-left: var(--size-sideNav-collapsed);
+}

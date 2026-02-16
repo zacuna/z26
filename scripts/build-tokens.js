@@ -4,110 +4,165 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * Transforms design tokens JSON to CSS custom properties
- * Handles token references like {color.base.white}
+ * Transforms design tokens JSON to CSS custom properties.
+ *
+ * Three-tier output:
+ *   1. Primitives  – raw values       (--color-black: #000000)
+ *   2. Semantic    – var() references  (--color-background-primary: var(--color-white))
+ *   3. Typography  – var() references  (--typography-heading-lg-fontSize: var(--fontSize-3xl))
  */
 
-function resolveTokenReferences(value, tokens) {
-  if (typeof value !== 'string') return value;
-  
-  const referenceRegex = /\{([^}]+)\}/g;
-  let resolved = value;
-  let match;
-  
-  while ((match = referenceRegex.exec(value)) !== null) {
-    const path = match[1].split('.');
-    let tokenValue = tokens;
-    
-    for (const key of path) {
-      tokenValue = tokenValue?.[key];
-    }
-    
-    if (tokenValue && typeof tokenValue === 'string') {
-      resolved = resolved.replace(match[0], tokenValue);
-    }
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Convert a dotted token path (e.g. "color.base.gray.50") to the CSS custom
+ * property name that the primitive layer would produce.
+ *
+ * "color.base.gray.50"  →  "color-gray-50"   (strip "base" – it's a namespace)
+ * "fontSize.3xl"        →  "fontSize-3xl"
+ * "lineHeight.tight"    →  "lineHeight-tight"
+ */
+function tokenPathToCSSVar(refPath) {
+  const parts = refPath.split('.');
+
+  // Strip the "base" segment that only exists as a JSON namespace for colors
+  if (parts[0] === 'color' && parts[1] === 'base') {
+    return `--color-${parts.slice(2).join('-')}`;
   }
-  
-  // Recursively resolve if there are still references
-  if (resolved !== value && referenceRegex.test(resolved)) {
-    return resolveTokenReferences(resolved, tokens);
-  }
-  
-  return resolved;
+
+  return `--${parts.join('-')}`;
 }
 
-function flattenTokens(obj, prefix = '', tokens) {
-  let result = {};
-  
-  for (const key in obj) {
-    const value = obj[key];
-    const newPrefix = prefix ? `${prefix}-${key}` : key;
-    
-    if (value && typeof value === 'object' && !Array.isArray(value)) {
-      Object.assign(result, flattenTokens(value, newPrefix, tokens));
+/**
+ * Given a token value string that may contain references like {color.base.blue.500},
+ * return a var() expression pointing at the primitive CSS variable.
+ *
+ * If the entire value is a single reference, return var(--…).
+ * If there are no references, return the raw value unchanged.
+ */
+function referenceToVar(value) {
+  if (typeof value !== 'string') return value;
+
+  const refRegex = /^\{([^}]+)\}$/;
+  const match = value.match(refRegex);
+  if (match) {
+    return `var(${tokenPathToCSSVar(match[1])})`;
+  }
+
+  // No reference – return raw value
+  return value;
+}
+
+/**
+ * Flatten an object tree into { 'prefix-key': value } pairs.
+ * Leaf values are kept as-is (no resolution).
+ */
+function flatten(obj, prefix = '') {
+  const result = {};
+
+  for (const key of Object.keys(obj)) {
+    const val = obj[key];
+    const prop = prefix ? `${prefix}-${key}` : key;
+
+    if (val && typeof val === 'object' && !Array.isArray(val)) {
+      Object.assign(result, flatten(val, prop));
     } else {
-      const resolved = resolveTokenReferences(value, tokens);
-      result[newPrefix] = resolved;
+      result[prop] = val;
     }
   }
-  
+
   return result;
 }
 
+// ---------------------------------------------------------------------------
+// CSS Generation
+// ---------------------------------------------------------------------------
+
 function generateCSS(tokens) {
-  let css = '/* Auto-generated from tokens/tokens.json - DO NOT EDIT MANUALLY */\n\n';
-  
-  // Generate base tokens (always available)
+  let css = '/* Auto-generated from tokens/tokens.json — DO NOT EDIT MANUALLY */\n\n';
+
+  // ── 1. Primitive tokens (raw values) ──────────────────────────────────
+  css += '/* ── Primitive tokens ─────────────────────────────────────── */\n';
   css += ':root {\n';
-  const baseTokens = flattenTokens({ 
+
+  const primitives = flatten({
     spacing: tokens.spacing,
     borderRadius: tokens.borderRadius,
     fontSize: tokens.fontSize,
     fontWeight: tokens.fontWeight,
     lineHeight: tokens.lineHeight,
-    color: tokens.color.base
-  }, '', tokens);
-  
-  for (const [key, value] of Object.entries(baseTokens)) {
+    fontFamily: tokens.fontFamily,
+    color: tokens.color.base,        // base colors are primitives
+    shadow: tokens.shadow,
+    zIndex: tokens.zIndex,
+    transition: tokens.transition,
+    size: tokens.size,
+  });
+
+  for (const [key, value] of Object.entries(primitives)) {
     css += `  --${key}: ${value};\n`;
   }
+
   css += '}\n\n';
-  
-  // Generate light theme (default)
+
+  // ── 2. Semantic tokens – light theme (default) ────────────────────────
+  css += '/* ── Semantic tokens · light (default) ─────────────────────── */\n';
   css += ':root {\n';
-  const lightTokens = flattenTokens({ color: tokens.color.light }, '', tokens);
-  for (const [key, value] of Object.entries(lightTokens)) {
-    css += `  --${key}: ${value};\n`;
+
+  const lightFlat = flatten({ color: tokens.color.light });
+  for (const [key, rawValue] of Object.entries(lightFlat)) {
+    css += `  --${key}: ${referenceToVar(rawValue)};\n`;
   }
+
   css += '}\n\n';
-  
-  // Generate dark theme
+
+  // ── 3. Semantic tokens – dark theme ───────────────────────────────────
+  css += '/* ── Semantic tokens · dark ────────────────────────────────── */\n';
   css += '[data-theme="dark"] {\n';
-  const darkTokens = flattenTokens({ color: tokens.color.dark }, '', tokens);
-  for (const [key, value] of Object.entries(darkTokens)) {
-    css += `  --${key}: ${value};\n`;
+
+  const darkFlat = flatten({ color: tokens.color.dark });
+  for (const [key, rawValue] of Object.entries(darkFlat)) {
+    css += `  --${key}: ${referenceToVar(rawValue)};\n`;
   }
-  css += '}\n';
-  
+
+  css += '}\n\n';
+
+  // ── 4. Typography composite tokens ────────────────────────────────────
+  if (tokens.typography) {
+    css += '/* ── Typography tokens ────────────────────────────────────── */\n';
+    css += ':root {\n';
+
+    const typoFlat = flatten({ typography: tokens.typography });
+    for (const [key, rawValue] of Object.entries(typoFlat)) {
+      css += `  --${key}: ${referenceToVar(rawValue)};\n`;
+    }
+
+    css += '}\n';
+  }
+
   return css;
 }
 
-// Main execution
+// ---------------------------------------------------------------------------
+// Main
+// ---------------------------------------------------------------------------
+
 const tokensPath = path.join(__dirname, '../tokens/tokens.json');
 const outputPath = path.join(__dirname, '../src/styles/tokens.css');
 
 try {
   const tokensJson = fs.readFileSync(tokensPath, 'utf8');
   const tokens = JSON.parse(tokensJson);
-  
+
   const css = generateCSS(tokens);
-  
-  // Ensure output directory exists
+
   const outputDir = path.dirname(outputPath);
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
-  
+
   fs.writeFileSync(outputPath, css);
   console.log('✅ Tokens successfully transformed to CSS');
   console.log(`📄 Output: ${outputPath}`);
