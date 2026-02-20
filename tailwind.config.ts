@@ -8,6 +8,21 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      height: {
+        header: "var(--layout-header-height)",
+      },
+      width: {
+        "sidebar-expanded": "var(--sidebar-width-expanded)",
+        "sidebar-collapsed": "var(--sidebar-width-collapsed)",
+      },
+      minWidth: {
+        "sidebar-expanded": "var(--sidebar-width-expanded)",
+        "sidebar-collapsed": "var(--sidebar-width-collapsed)",
+      },
+      margin: {
+        "sidebar-expanded": "var(--sidebar-width-expanded)",
+        "sidebar-collapsed": "var(--sidebar-width-collapsed)",
+      },
       /* Colors are defined in globals.css @theme inline with hsl() wrapper */
       borderRadius: {
         sm: "var(--radius-sm)",

@@ -6,7 +6,7 @@
 
 ## Project Overview
 
-**Owner:** Zach Acuna — product designer building a portfolio and personal tool ecosystem.
+**Owner:** A product designer building a portfolio and personal tool ecosystem.
 
 **Goal:** Build a centralized design system and portfolio site that enables rapid iteration on new ideas. The design system is the foundation; everything else (portfolio, tools, playground) consumes it.
 
@@ -257,6 +257,7 @@ After any agent session that makes changes, update the changelog below with:
 | Date | Agent | Changes | Notes |
 |------|-------|---------|-------|
 | 2/20/2026 | Claude (claude.ai) | Created HANDOFF.md, .cursorrules, migration plan | Ready to begin Phase 1 |
+| 2/20/2026 | Cursor | App Shell: SiteHeader, SideNav, AppShell; layout tokens; wired in root layout; nav items Home, Work, Play, About, Contact | Phase 2 progress |
 | | | | |
 
 ---
