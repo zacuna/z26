@@ -258,6 +258,7 @@ After any agent session that makes changes, update the changelog below with:
 |------|-------|---------|-------|
 | 2/20/2026 | Claude (claude.ai) | Created HANDOFF.md, .cursorrules, migration plan | Ready to begin Phase 1 |
 | 2/20/2026 | Cursor | App Shell: SiteHeader, SideNav, AppShell; layout tokens; wired in root layout; nav items Home, Work, Play, About, Contact | Phase 2 progress |
+| 2/20/2026 | Cursor | Full site structure: Home (featured work + play cards), Work index + case study template (/work/[slug], sample at /work/sample-project), Play index + design-system/color-contrast/type-scale pages, About (two-column + skills pills), Contact (minimal with LinkedIn). All token-based, no hardcoded values. | Navigable placeholder content; Theme Editor to be added in Phase 3. |
 | | | | |
 
 ---
