@@ -14,7 +14,7 @@ export function SiteHeader({ onMenuToggle, className }: SiteHeaderProps) {
   return (
     <header
       className={cn(
-        "fixed left-0 right-0 top-0 z-header flex h-header w-full items-center justify-between border-b border-border bg-background px-4",
+        "fixed left-0 right-0 top-0 z-[var(--z-header)] flex h-14 w-full items-center justify-between border-b border-border bg-background px-4",
         className
       )}
       role="banner"

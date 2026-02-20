@@ -102,8 +102,8 @@ export function SideNav({
       {/* Desktop: fixed sidebar */}
       <aside
         className={cn(
-          "fixed left-0 top-[var(--layout-header-height)] z-sidebar hidden h-[calc(100vh-var(--layout-header-height))] border-r border-sidebar-border bg-sidebar transition-[width] duration-200 ease-in-out md:block",
-          expanded ? "w-sidebar-expanded min-w-sidebar-expanded" : "w-sidebar-collapsed min-w-sidebar-collapsed",
+          "fixed left-0 top-14 z-[var(--z-sidebar)] hidden h-[calc(100vh-3.5rem)] border-r border-sidebar-border bg-sidebar transition-[width] duration-200 ease-in-out md:block",
+          expanded ? "w-60 min-w-60" : "w-16 min-w-16",
           className
         )}
         aria-label="Side navigation"
@@ -121,7 +121,7 @@ export function SideNav({
       <Sheet open={mobileOpen} onOpenChange={onMobileOpenChange}>
         <SheetContent
           side="left"
-          className="w-sidebar-expanded max-w-sidebar-expanded border-sidebar-border bg-sidebar p-0"
+          className="w-60 max-w-60 border-sidebar-border bg-sidebar p-0"
           aria-describedby={undefined}
         >
           <SheetHeader className="border-b border-sidebar-border p-4 text-left">

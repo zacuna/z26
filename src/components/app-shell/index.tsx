@@ -57,9 +57,9 @@ export function AppShell({
       />
       <main
         className={cn(
-          "min-h-screen pt-header transition-[margin-left] duration-200 ease-in-out",
-          "md:ml-sidebar-collapsed",
-          sidebarExpanded && "md:ml-sidebar-expanded"
+          "min-h-screen pt-14 transition-[margin-left] duration-200 ease-in-out",
+          "md:ml-16",
+          sidebarExpanded && "md:ml-60"
         )}
       >
         {children}

@@ -15,17 +15,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ThemeEditor } from "@/components/theme-editor/ThemeEditor";
 
+/* Tailwind default spacing scale (1 unit = 0.25rem = 4px) */
 const SPACING_SCALE = [
-  { name: "1", size: "var(--spacing-1)" },
-  { name: "2", size: "var(--spacing-2)" },
-  { name: "3", size: "var(--spacing-3)" },
-  { name: "4", size: "var(--spacing-4)" },
-  { name: "5", size: "var(--spacing-5)" },
-  { name: "6", size: "var(--spacing-6)" },
-  { name: "8", size: "var(--spacing-8)" },
-  { name: "10", size: "var(--spacing-10)" },
-  { name: "12", size: "var(--spacing-12)" },
+  { name: "1", size: "4px" },
+  { name: "2", size: "8px" },
+  { name: "3", size: "12px" },
+  { name: "4", size: "16px" },
+  { name: "5", size: "20px" },
+  { name: "6", size: "24px" },
+  { name: "8", size: "32px" },
+  { name: "10", size: "40px" },
+  { name: "12", size: "48px" },
 ];
 
 const COLOR_SWATCHES = [
@@ -49,7 +51,9 @@ const TABLE_ROWS = [
 
 export default function DesignSystemPage() {
   return (
-    <div className="flex flex-col gap-16 p-6">
+    <div className="flex min-h-[calc(100vh-3.5rem)] flex-1">
+      <div className="min-h-0 min-w-0 flex-1 overflow-y-auto">
+        <div className="flex flex-col gap-16 p-6">
       <header className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold leading-tight text-foreground">
           Design System
@@ -219,6 +223,11 @@ export default function DesignSystemPage() {
           ))}
         </div>
       </section>
+        </div>
+      </div>
+      <div className="flex min-h-[calc(100vh-3.5rem)] w-[320px] shrink-0 flex-col border-l border-border">
+        <ThemeEditor className="min-h-0 flex-1" />
+      </div>
     </div>
   );
 }
