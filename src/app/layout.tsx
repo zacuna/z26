@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import '@/styles/globals.css';
+import type { Metadata } from "next";
+import "@/styles/globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
-  title: 'Portfolio Foundation',
-  description: 'Design system foundation for portfolio and playground',
+  title: "Z26",
+  description: "Design system foundation for portfolio and playground",
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider>{children}</ThemeProvider>
       </body>

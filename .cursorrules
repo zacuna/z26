@@ -1,0 +1,105 @@
+# Z26 Design System — Cursor Rules
+
+## First Steps
+Before making any changes, read `HANDOFF.md` in the project root for full architecture context, current state, and migration progress.
+
+## Project Context
+This is a Next.js 15 + TypeScript design system and portfolio foundation. It uses Tailwind CSS v4 for styling and Shadcn UI for component primitives. The design system is token-driven with a two-tier architecture: primitives (raw values) and semantic tokens (named assignments).
+
+## Critical Rules
+
+### 1. NEVER Hardcode Values
+Every color, spacing, font size, radius, shadow, and z-index must come from the design token system. No magic numbers. No inline pixel values. No hex codes in components.
+
+```tsx
+// ❌ NEVER
+<div className="p-[18px] text-[#333] rounded-[6px]">
+
+// ✅ ALWAYS
+<div className="p-4 text-foreground rounded-md">
+```
+
+If a value doesn't exist in the token system, add it to `tailwind.config.ts` as a primitive first, then use it.
+
+### 2. Component Patterns
+- Shadcn components live in `components/ui/` — modify freely but keep the Shadcn structure
+- Custom compositions (AppShell, ThemeEditor, page layouts) live in `components/`
+- Always use the `cn()` utility from `lib/utils.ts` for conditional classes
+- Export components as named exports, not default exports
+- All props must be typed with TypeScript interfaces
+
+```tsx
+// Standard component pattern
+import { cn } from "@/lib/utils"
+
+interface MyComponentProps {
+  variant?: "default" | "outline"
+  className?: string
+  children: React.ReactNode
+}
+
+export function MyComponent({ variant = "default", className, children }: MyComponentProps) {
+  return (
+    <div className={cn("base-classes", variant === "outline" && "outline-classes", className)}>
+      {children}
+    </div>
+  )
+}
+```
+
+### 3. Server Components by Default
+Do NOT add `'use client'` unless the component uses:
+- useState, useEffect, useContext, or other hooks
+- Event handlers (onClick, onChange, etc.)
+- Browser APIs (localStorage, window, etc.)
+
+### 4. Styling Rules
+- Use Tailwind utility classes only. No CSS Modules, no inline styles, no separate CSS files (except `globals.css`)
+- Use Shadcn's CSS variable naming convention for theme values (e.g., `bg-background`, `text-foreground`, `border-border`)
+- For dark mode, rely on the CSS variable system — do NOT use Tailwind's `dark:` prefix
+- Transitions on theme change are handled globally — do not add per-component theme transitions
+
+### 5. Accessibility (WCAG AA)
+- All interactive elements must be keyboard accessible
+- All images need alt text
+- All form inputs need associated labels
+- Color contrast must meet WCAG AA (4.5:1 for normal text, 3:1 for large text)
+- Use semantic HTML elements (`nav`, `main`, `header`, `footer`, `section`)
+- Shadcn/Radix handles focus management and ARIA — do not override unless necessary
+
+### 6. File Organization
+```
+components/
+  ui/            ← Shadcn-managed components (Button, Table, etc.)
+  theme-editor/  ← Theme editing tools (DEV ONLY features)
+  app-shell.tsx  ← Layout compositions
+  ...            ← Other custom components
+
+app/
+  layout.tsx
+  page.tsx
+  play/
+    page.tsx
+    design-system/
+      page.tsx
+
+lib/
+  utils.ts       ← cn() and shared utilities
+```
+
+### 7. Theme Editor Security
+The Theme Editor's commit functionality (writing to files) must ONLY work in development:
+- API route: guard with `process.env.NODE_ENV === 'development'` (server-side, cannot be spoofed)
+- Commit button: conditionally render with compile-time `process.env.NODE_ENV` check
+- NEVER rely solely on UI hiding for security — the endpoint itself must reject requests in production
+
+### 8. Git Practices
+- Never commit `.env.local` or any file containing secrets
+- After making significant changes, update the Changelog table in `HANDOFF.md`
+- Commit messages should be descriptive: "Add Button and Table components via Shadcn" not "update"
+
+## Working Within This Project
+- Stay within the project directory. Do not modify files outside the repo.
+- If you need to install a package, use `npm install`
+- If you need to add a Shadcn component, use `npx shadcn@latest add [component-name]`
+- If unsure about architecture decisions, check `HANDOFF.md` or ask
