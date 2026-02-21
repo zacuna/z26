@@ -27,10 +27,28 @@ export interface ColorTokenFieldProps {
   className?: string;
 }
 
-/** Find display label for an HSL value from our palette, or return custom text */
+/**
+ * Normalize oklch() string for comparison (getComputedStyle may use different
+ * formatting: extra spaces, % vs 0-1 for L, decimal precision).
+ */
+function normalizeOklch(value: string): string {
+  const trimmed = value.trim().replace(/\s+/g, " ");
+  const match = trimmed.match(/^oklch\s*\(\s*([\d.]+)(%?)\s+([\d.]+)\s+([\d.]+)\s*\)$/i);
+  if (!match) return trimmed;
+  let L = parseFloat(match[1]);
+  if (match[2] === "%") L = L / 100;
+  const C = parseFloat(match[3]);
+  const H = parseFloat(match[4]);
+  const r = (n: number) => Math.round(n * 1e4) / 1e4;
+  return `oklch(${r(L)} ${r(C)} ${r(H)})`;
+}
+
+/** Find display label for an oklch value from our palette, or return custom text */
 function getColorLabel(value: string): string {
-  const opt = TAILWIND_COLOR_OPTIONS.find((o) => o.value === value);
-  return opt ? opt.label : value ? `Custom (${value})` : "—";
+  if (!value) return "—";
+  const normalized = normalizeOklch(value);
+  const opt = TAILWIND_COLOR_OPTIONS.find((o) => normalizeOklch(o.value) === normalized);
+  return opt ? opt.label : `Custom (${value})`;
 }
 
 export function ColorTokenField({
@@ -61,8 +79,9 @@ export function ColorTokenField({
     return COLOR_FAMILY_ORDER.filter((f) => f.includes(q));
   }, [search]);
 
-  const swatchStyle = (hsl: string) =>
-    ({ backgroundColor: `hsl(${hsl})` } as React.CSSProperties);
+  /** Value is already a full oklch() color string; use directly for background */
+  const swatchStyle = (value: string): React.CSSProperties =>
+    value ? { backgroundColor: value } : {};
 
   return (
     <div className={cn("flex flex-col gap-1.5", className)} ref={containerRef}>
@@ -118,8 +137,9 @@ export function ColorTokenField({
                       {family}
                     </div>
                     <div className="grid grid-cols-6 gap-1">
-                      {entries.map(([stop, hsl]) => {
-                        const isSelected = value === hsl;
+                      {entries.map(([stop, oklch]) => {
+                        const isSelected =
+                          normalizeOklch(value) === normalizeOklch(oklch);
                         return (
                           <button
                             key={stop}
@@ -133,9 +153,9 @@ export function ColorTokenField({
                                 ? "border-ring ring-1 ring-ring"
                                 : "border-transparent hover:border-border"
                             )}
-                            style={swatchStyle(hsl)}
+                            style={swatchStyle(oklch)}
                             onClick={() => {
-                              onChange(hsl);
+                              onChange(oklch);
                               setOpen(false);
                             }}
                           >

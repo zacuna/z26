@@ -1,16 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface SiteHeaderProps {
-  onMenuToggle: () => void;
   className?: string;
 }
 
-export function SiteHeader({ onMenuToggle, className }: SiteHeaderProps) {
+export function SiteHeader({ className }: SiteHeaderProps) {
   return (
     <header
       className={cn(
@@ -20,17 +18,10 @@ export function SiteHeader({ onMenuToggle, className }: SiteHeaderProps) {
       role="banner"
     >
       <div className="flex items-center gap-4">
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={onMenuToggle}
+        <SidebarTrigger
           aria-label="Toggle navigation menu"
-          aria-expanded={undefined}
           className="shrink-0"
-        >
-          <Menu className="size-5" aria-hidden />
-        </Button>
+        />
         <span className="text-lg font-semibold text-foreground">Z26</span>
       </div>
       <div className="flex items-center gap-2">
